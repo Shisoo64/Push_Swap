@@ -1,4 +1,4 @@
-# 🔄 Push_Swap
+# 🔀 Push_Swap
 ### Swapush pour les intimes
 
 ## 🔩 Makefile
