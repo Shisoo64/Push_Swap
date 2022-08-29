@@ -3,23 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/06/03 20:42:26 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:56:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int ac, char **av)
+void print_stack(t_node *head_a, t_node *head_b)
+{
+    t_node	*tmp;
+
+    tmp = head_a;
+    ft_printf("***Printing the stacks***\n\n");
+    ft_printf("Stack A :  ");
+	while (tmp->next != NULL)
+    {
+        ft_printf("%d * ", tmp->data);
+		tmp = tmp->next;
+    }
+    ft_printf("%d\n\n", tmp->data);
+    tmp = head_b;
+    ft_printf("Stack B :  ");
+	while (tmp->next != NULL)
+    {
+        ft_printf("%d * ", tmp->data);
+		tmp = tmp->next;
+    }
+    ft_printf("%d\n\n", tmp->data);
+}
+
+t_node	*newnode(int data)
+{
+	t_node	*node;
+
+	node = malloc(sizeof(t_node));
+	if (node)
+	{
+		node->data = data;
+		node->next = NULL;
+	}
+	return (node);
+}
+
+void	pushfront(t_node **head, t_node **new)
+{
+    t_node *h;
+    t_node *n;
+    
+    h = *head;
+    n = *new;    
+
+	n->next = h;
+	h = n;
+}
+
+void	addback(t_node **head, t_node *new)
+{
+	t_node	*tmp;
+
+	if (!head || !*head)
+	{
+		*head = new;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+void	swapstacks(t_node **head_a, t_node **head_b)
+{
+    t_node *tmpa;
+    t_node *tmpb;
+    
+    tmpa = *head_a;
+    tmpb = *head_b;
+    pushfront(&tmpa, &tmpb);
+}
+
+int main(int ac, char **av)
 {
 	t_stacks	stacks;
 	int	i;
 
-	i = 0;
-	stacks.a = malloc(sizeof(int) * ac);
-	stacks.b = malloc(sizeof(int) * ac);
-	while (++i != ac)
-		stacks.a = av[i];
+	i = 1;
+    stacks.len = ac;
+    stacks.a_head = newnode(ft_atoi(av[1]));
+    stacks.b_head = newnode(0);
+	while (++i != stacks.len)
+        addback(&stacks.a_head, newnode(ft_atoi(av[i])));
+    print_stack(stacks.a_head, stacks.b_head);
+    swapstacks(&stacks.a_head, &stacks.b_head);
+    print_stack(stacks.a_head, stacks.b_head);
 }

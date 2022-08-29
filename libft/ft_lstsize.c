@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/08/29 17:37:17 by rlaforge         ###   ########.fr       */
+/*   Created: 2022/04/18 15:55:21 by rlaforge          #+#    #+#             */
+/*   Updated: 2022/08/29 16:14:30 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include"libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
-
-typedef struct s_node
+int	ft_lstsize(t_list *lst)
 {
-	struct	s_node *next;
-    int 	data;
-}				t_node;
+	int	i;
 
-typedef struct s_stacks
-{
-	t_node	*a_head;
-	t_node	*b_head;
-	int		len;
-}				t_stacks;
-
-#endif
+	i = 0;
+	while (lst != NULL)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}

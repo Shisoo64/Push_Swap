@@ -5,22 +5,26 @@ CC = gcc
 
 CFLAGS = -g -Wall -Wextra -Werror
 
+LIBFT = libft/libft.a
+
 NAME = push_swap
 
 OBJS = $(SRCS:.c=.o)
 
-CLIB = ar -rcs
-
 all : $(NAME)
 
 .c.o :
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) -Llibft -lft -c $< -o $(<:.c=.o)
 
-$(NAME) : $(OBJS)
-	$(CLIB) $(NAME) $(OBJS)
+$(LIBFT) :
+	make -C libft/
+
+$(NAME) : $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(CFLAGS) -Llibft -lft  -o $(NAME)
 
 clean :
 	rm -f $(OBJS)
+	make -C libft/ fclean
 
 fclean : clean
 	rm -rf $(NAME)
