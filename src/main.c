@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/08/29 18:56:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:26:22 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,11 @@ t_node	*newnode(int data)
 
 void	pushfront(t_node **head, t_node **new)
 {
-    t_node *h;
-    t_node *n;
-    
-    h = *head;
-    n = *new;    
-
-	n->next = h;
-	h = n;
+    t_node	*tmp;
+    tmp = (*new)->next;
+	(*new)->next = *head;
+	*head = *new;
+    *new = tmp;
 }
 
 void	addback(t_node **head, t_node *new)
@@ -77,12 +74,8 @@ void	addback(t_node **head, t_node *new)
 
 void	swapstacks(t_node **head_a, t_node **head_b)
 {
-    t_node *tmpa;
-    t_node *tmpb;
-    
-    tmpa = *head_a;
-    tmpb = *head_b;
-    pushfront(&tmpa, &tmpb);
+    while ((*head_a)->next != NULL)
+        pushfront(head_b, head_a);
 }
 
 int main(int ac, char **av)
@@ -98,5 +91,7 @@ int main(int ac, char **av)
         addback(&stacks.a_head, newnode(ft_atoi(av[i])));
     print_stack(stacks.a_head, stacks.b_head);
     swapstacks(&stacks.a_head, &stacks.b_head);
+    print_stack(stacks.a_head, stacks.b_head);
+    swapstacks(&stacks.b_head, &stacks.a_head);
     print_stack(stacks.a_head, stacks.b_head);
 }
