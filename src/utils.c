@@ -18,13 +18,13 @@
 i = -1;
 x = -1;
 
-    while (++x != nbrlen(item))
+    while (++x < 32)
     {
         while (++i != number of items)
         {
-            if item[i][x] == 1 
+            if (item[i] >> x) & 1
                 PB;
-            if item[i][x] == 0
+            else
                 RA;
         }
         while (ya des item dans B)
