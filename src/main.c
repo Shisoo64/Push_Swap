@@ -6,11 +6,34 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/01 17:14:54 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:36:34 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+long	ft_atol(const char *nptr)
+{
+	long	nbr;
+	int	neg;
+	int	i;
+
+	i = 0;
+	neg = 1;
+	nbr = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-')
+	{
+		i++;
+		neg = -neg;
+	}
+	else if (nptr[i] == '+')
+		i++;
+	while (nptr[i] && (nptr[i] >= '0' && nptr[i] <= '9'))
+		nbr = nbr * 10 + (nptr[i++] - '0');
+	return (nbr * neg);
+}
 
 void print_stack(t_stacks *stacks)
 {
@@ -133,6 +156,29 @@ void    sort(t_stacks *stacks)
     ft_printf("\n************************\n");
 }
 
+int check_args(int ac, char **av)
+{
+    int i;
+    int j;
+    int x;
+
+    i = 0;
+	while (++i != ac)
+    {
+        if(ft_atol(av[i]) < INT_MIN || ft_atol(av[i]) > INT_MAX)
+            return (1);
+        j = -1;
+        while (av[i][++j])
+            if(!ft_isdigit(av[i][j]))
+                return (1);
+        x = i;
+        while (av[--x] && x > 0)
+            if(ft_atoi(av[x]) == ft_atoi(av[i]))
+                return (1);
+    }
+    return (0);
+}
+
 int main(int ac, char **av)
 {
 	t_stacks	stacks;
@@ -140,6 +186,11 @@ int main(int ac, char **av)
 
 	i = 1;
     stacks.len = ac;
+    if (check_args(ac, av))
+    {
+        ft_printf("Error\n");
+        return (1);
+    }
     stacks.a_head = newnode(ft_atoi(av[1]));
     stacks.b_head = NULL;
 	while (++i != stacks.len)
