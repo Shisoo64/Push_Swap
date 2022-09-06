@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/05 17:36:34 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:14:54 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void print_stack(t_stacks *stacks)
     tmp = stacks->a_head;
     ft_printf("\n***Printing the stacks***\n");
     ft_printf("Stack A : * ");
-	while (tmp != NULL)
+	while (tmp)
     {
         ft_printf("%d * ", tmp->data);
 		tmp = tmp->next;
     }
     tmp = stacks->b_head;
     ft_printf("\nStack B : * ");
-	while (tmp != NULL)
+	while (tmp)
     {
         ft_printf("%d * ", tmp->data);
 		tmp = tmp->next;
@@ -57,7 +57,7 @@ void print_stack(t_stacks *stacks)
     ft_printf("\n*************************\n\n");
 }
 
-t_node	*newnode(int data)
+t_node	*newnode(int data, int id)
 {
 	t_node	*node;
 
@@ -65,35 +65,36 @@ t_node	*newnode(int data)
 	if (node)
 	{
 		node->data = data;
+        node->id = id;
 		node->next = NULL;
 	}
 	return (node);
 }
 
-void	pushfront(t_node **src, t_node **dst, char id)
+void	pushfront(t_node **src, t_node **dst, char stack_id)
 {
     t_node	*tmp;
 
 
-    ft_printf("p%c\n", id);
+    ft_printf("p%c\n", stack_id);
     tmp = (*src)->next;
 	(*src)->next = *dst;
 	*dst = *src;
     *src = tmp;
 }
 
-void	rotate(t_node **head, char id)
+void	rotate(t_node **head, char stack_id)
 {
     t_node	*tail;
     t_node	*tmp;
 
 	if (!*head || !(*head)->next)
 		return ;
-    ft_printf("r%c\n", id);
+    ft_printf("r%c\n", stack_id);
     tail = *head;
     tmp = *head;
     *head = (*head)->next;
-    while (tail->next != NULL)
+    while (tail->next)
 		tail = tail->next;
     tmp->next = NULL;
     tail->next = tmp;
@@ -109,15 +110,9 @@ void	addback(t_node **head, t_node *new)
 		return ;
 	}
 	tmp = *head;
-	while (tmp && tmp->next != NULL)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-}
-
-void	swapstacks(t_node **head_a, t_node **head_b)
-{
-    while (*head_a != NULL)
-        pushfront(head_a, head_b, 'b');
 }
 
 void    sort(t_stacks *stacks)
@@ -126,7 +121,6 @@ void    sort(t_stacks *stacks)
 	t_node	*tmpb;
     int x;
     int i;
-
 
     ft_printf("\n***SORTING THE STACKS***\n\n");
     x = -1;
@@ -143,17 +137,38 @@ void    sort(t_stacks *stacks)
             else   
                 pushfront(&stacks->a_head, &stacks->b_head, 'b');
             tmpa = stacks->a_head;
-            print_stack(stacks);
         }
         tmpb = stacks->b_head;
-        while (tmpb != NULL)
+        while (tmpb)
         {
             pushfront(&stacks->b_head, &stacks->a_head, 'a');
             tmpb = stacks->b_head;
         }
         print_stack(stacks);
-    }
+    } 
     ft_printf("\n************************\n");
+}
+
+void Sort_int(int *num, int ac)
+{
+    int i;
+    int j;
+    int temp;
+
+    i = -1;
+    while (++i < ac)
+    {
+        j = -1;
+        while (++j < ac - i)
+        {
+            if (num[j] > num[j + 1])
+            {
+                temp = num[j + 1];
+                num[j + 1] = num[j];
+                num[j] = temp;
+            }
+        }
+    }
 }
 
 int check_args(int ac, char **av)
@@ -179,29 +194,41 @@ int check_args(int ac, char **av)
     return (0);
 }
 
+void    create_list(t_stacks *stacks, int ac, char **av)
+{
+    int	i;
+    int *num;
+    //int *id_list;
+
+    // put the numbers in an int array
+	i = -1;
+    stacks->len = ac - 1;
+    num = malloc(sizeof(int) * (stacks->len));
+    //id_list = malloc(sizeof(int) * (stacks->len));
+    while (++i != stacks->len)
+        num[i] = ft_atoi(av[i + 1]);
+    // sort the int array
+    Sort_int(num, stacks->len - 1);
+    // put the numbers and id in a linked-list
+    i = 0;
+    stacks->a_head = newnode(ft_atoi(av[i + 1]), i);
+    stacks->b_head = NULL;
+	while (++i != stacks->len)
+        addback(&stacks->a_head, newnode(ft_atoi(av[i + 1]), i));
+    free(num);
+}
+
 int main(int ac, char **av)
 {
 	t_stacks	stacks;
-	int	i;
-
-	i = 1;
-    stacks.len = ac;
-    if (check_args(ac, av))
+    
+	if (check_args(ac, av))
     {
         ft_printf("Error\n");
         return (1);
     }
-    stacks.a_head = newnode(ft_atoi(av[1]));
-    stacks.b_head = NULL;
-	while (++i != stacks.len)
-        addback(&stacks.a_head, newnode(ft_atoi(av[i])));
+    create_list(&stacks, ac, av);
     print_stack(&stacks);
-    /*swapstacks(&stacks.a_head, &stacks.b_head);
-    print_stack(&stacks);
-    swapstacks(&stacks.b_head, &stacks.a_head);
-    print_stack(&stacks);
-    rotate(&stacks.a_head, 'a');
-    print_stack(&stacks);*/
     sort(&stacks);
     print_stack(&stacks);
 }
