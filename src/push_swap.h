@@ -32,4 +32,7 @@ typedef struct s_stacks
 	int		len;
 }				t_stacks;
 
+long	ft_atol(const char *nptr);
+void print_stack(t_stacks *stacks);
+
 #endif

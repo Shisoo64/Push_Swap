@@ -12,51 +12,6 @@
 
 #include "push_swap.h"
 
-long	ft_atol(const char *nptr)
-{
-	long	nbr;
-	int	neg;
-	int	i;
-
-	i = 0;
-	neg = 1;
-	nbr = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '-')
-	{
-		i++;
-		neg = -neg;
-	}
-	else if (nptr[i] == '+')
-		i++;
-	while (nptr[i] && (nptr[i] >= '0' && nptr[i] <= '9'))
-		nbr = nbr * 10 + (nptr[i++] - '0');
-	return (nbr * neg);
-}
-
-void print_stack(t_stacks *stacks)
-{
-    t_node	*tmp;
-
-    tmp = stacks->a_head;
-    ft_printf("\n***Printing the stacks***\n");
-    ft_printf("Stack A : * ");
-	while (tmp)
-    {
-        ft_printf("%d * ", tmp->data);
-		tmp = tmp->next;
-    }
-    tmp = stacks->b_head;
-    ft_printf("\nStack B : * ");
-	while (tmp)
-    {
-        ft_printf("%d * ", tmp->data);
-		tmp = tmp->next;
-    }
-    ft_printf("\n*************************\n\n");
-}
-
 t_node	*newnode(int data, int id)
 {
 	t_node	*node;
@@ -122,7 +77,7 @@ void    sort(t_stacks *stacks)
     int x;
     int i;
 
-    ft_printf("\n***SORTING THE STACKS***\n\n");
+    ft_printf("\n*** SORTING THE STACKS ******\n\n");
     x = -1;
     while (++x < 32)
     {
@@ -139,14 +94,16 @@ void    sort(t_stacks *stacks)
             tmpa = stacks->a_head;
         }
         tmpb = stacks->b_head;
+        print_stack(stacks);
         while (tmpb)
         {
             pushfront(&stacks->b_head, &stacks->a_head, 'a');
             tmpb = stacks->b_head;
         }
         print_stack(stacks);
-    } 
-    ft_printf("\n************************\n");
+    }
+    ft_printf("\n\n*** STACKS ARE SORTED ********\n\n");
+    print_stack(stacks);
 }
 
 void Sort_int(int *num, int ac)
@@ -230,5 +187,4 @@ int main(int ac, char **av)
     create_list(&stacks, ac, av);
     print_stack(&stacks);
     sort(&stacks);
-    print_stack(&stacks);
 }
