@@ -94,7 +94,7 @@ void    sort(t_stacks *stacks)
     int i;
     int bitnbr;
 
-    ft_printf("\n***SORTING THE STACKS***\n\n");
+    ft_printf("\n*** SORTING THE STACKS ******\n\n");
     bitnbr = get_bitnbr(stacks->len);
     x = -1;
     while (++x < bitnbr)
@@ -111,43 +111,8 @@ void    sort(t_stacks *stacks)
                 pushfront(&stacks->a_head, &stacks->b_head, 'b');
             tmpa = stacks->a_head;
         }
-        tmpb = stacks->b_head;
-        while (tmpb)
-        {
-            pushfront(&stacks->b_head, &stacks->a_head, 'a');
-            tmpb = stacks->b_head;
-        }
         print_stack(stacks);
-    }
-    ft_printf("\n************************\n");
-}
-
-/* OLD SORT WITH DATA INSTEAD OF ID
-void    sort(t_stacks *stacks)
-{
-	t_node	*tmpa;
-	t_node	*tmpb;
-    int x;
-    int i;
-
-    ft_printf("\n*** SORTING THE STACKS ******\n\n");
-    x = -1;
-    while (++x < 32)
-    {
-        i = -1;
-        tmpa = stacks->a_head;
-        while (++i < stacks->len)
-        {
-            if (!tmpa)
-                break;
-            if ((tmpa->data >> x) & 1)
-                rotate(&stacks->a_head, 'a');
-            else   
-                pushfront(&stacks->a_head, &stacks->b_head, 'b');
-            tmpa = stacks->a_head;
-        }
         tmpb = stacks->b_head;
-        print_stack(stacks);
         while (tmpb)
         {
             pushfront(&stacks->b_head, &stacks->a_head, 'a');
@@ -156,9 +121,7 @@ void    sort(t_stacks *stacks)
         print_stack(stacks);
     }
     ft_printf("\n\n*** STACKS ARE SORTED ********\n\n");
-    print_stack(stacks);
 }
-*/
 
 int check_args(int ac, char **av)
 {
