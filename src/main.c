@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/07 17:21:53 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:42:03 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,29 +123,6 @@ void    sort(t_stacks *stacks)
     ft_printf("\n\n*** STACKS ARE SORTED ********\n\n");
 }
 
-int check_args(int ac, char **av)
-{
-    int i;
-    int j;
-    int x;
-
-    i = 0;
-	while (++i != ac)
-    {
-        if(ft_atol(av[i]) < INT_MIN || ft_atol(av[i]) > INT_MAX)
-            return (1);
-        j = -1;
-        while (av[i][++j])
-            if(!ft_isdigit(av[i][j]))
-                return (1);
-        x = i;
-        while (av[--x] && x > 0)
-            if(ft_atoi(av[x]) == ft_atoi(av[i]))
-                return (1);
-    }
-    return (0);
-}
-
 void    get_num_id(t_stacks *stacks)
 {
     t_node	*tmp;
@@ -166,29 +143,99 @@ void    get_num_id(t_stacks *stacks)
     }
 }
 
-void    create_list(t_stacks *stacks, int ac, char **av)
+int check_args(char **tab)
+{
+    int i;
+    int j;
+    int x;
+
+    i = 0;
+	while (tab[++i])
+    {
+        if(ft_atol(tab[i]) < INT_MIN || ft_atol(tab[i]) > INT_MAX)
+            return (1);
+        j = -1;
+        while (tab[i][++j])
+            if(!ft_isdigit(tab[i][j]))
+                return (1);
+        x = i;
+        while (tab[--x] && x > 0)
+            if(ft_atoi(tab[x]) == ft_atoi(tab[i]))
+                return (1);
+    }
+    return (0);
+}
+
+void    create_list(t_stacks *stacks, char **tab)
 {
     int	i;
 
     i = 0;
-    stacks->len = ac - 1;
-    stacks->a_head = newnode(ft_atoi(av[i + 1]), 0);
+    stacks->a_head = newnode(ft_atoi(tab[i]), 0);
     stacks->b_head = NULL;
-	while (++i != stacks->len)
-        addback(&stacks->a_head, newnode(ft_atoi(av[i + 1]), 0));
+	while (tab[++i])
+        addback(&stacks->a_head, newnode(ft_atoi(tab[i]), 0));
     get_num_id(stacks);
+}
+
+char	*strjoin_ps(char *s1, char *s2)
+{
+	char	*tab;
+	int		longueur;
+
+	longueur = ft_strlen(s1) + ft_strlen(s2) + 2;
+	tab = malloc(sizeof(char) * longueur);
+	if (!tab)
+		return (NULL);
+	ft_strlcpy(tab, s1, longueur);
+	if (s1[0] != '\0')
+		ft_strlcat(tab, " ", longueur);
+	ft_strlcat(tab, s2, longueur);
+	free(s1);
+	return (tab);
+}
+
+int	ft_lstsize_ps(t_node *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}
+
+void	parse(t_stacks *stacks, char **av)
+{
+	char	*str;
+	char	**tab;
+    int     i;
+
+    i = 0;
+    str = ft_calloc(sizeof(char), 1);
+	while (av[++i])
+		str = strjoin_ps(str, av[i]);
+	tab = ft_split(str, ' ');
+    free(str);
+    if (check_args(tab))
+    {
+        write(2, "Error\n", 6);
+	    exit (0);
+    }
+    create_list(stacks, tab);
+    stacks->len = ft_lstsize_ps(stacks->a_head);
 }
 
 int main(int ac, char **av)
 {
 	t_stacks	stacks;
-    
-	if (check_args(ac, av))
-    {
-        ft_printf("Error\n");
+
+    if (ac < 2)
         return (1);
-    }
-    create_list(&stacks, ac, av);
+    parse(&stacks, av);
     print_stack(&stacks);
     sort(&stacks);
 }
