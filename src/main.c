@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/12 18:42:03 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:47:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	newnode(t_node **head, int data, int id)
         node->id = id;
 		node->next = NULL;
 	}
-	if (!*head)
+	if (!*head || !head)
 	{
 		*head = node;
 		return ;
@@ -47,7 +47,6 @@ int    get_bitnbr(int size)
         bit_pow *= 2;
         bitnbr++;
     }
-
     return (bitnbr);
 }
 
@@ -59,7 +58,6 @@ void    sort(t_stacks *stacks)
     int i;
     int bitnbr;
 
-    ft_printf("\n*** SORTING THE STACKS ******\n\n");
     bitnbr = get_bitnbr(stacks->len);
     x = -1;
     while (++x < bitnbr)
@@ -76,25 +74,74 @@ void    sort(t_stacks *stacks)
                 push(&stacks->a_head, &stacks->b_head, 'b');
             tmpa = stacks->a_head;
         }
-        print_stack(stacks);
         tmpb = stacks->b_head;
         while (tmpb)
         {
             push(&stacks->b_head, &stacks->a_head, 'a');
             tmpb = stacks->b_head;
         }
-        print_stack(stacks);
     }
-    ft_printf("\n\n*** STACKS ARE SORTED ********\n\n");
+}
+
+void	sort_three(t_stacks *stacks)
+{
+	t_node	*tmp;
+
+	tmp = stacks->a_head;
+	if (tmp->id == 1 && tmp->next->id == 0)
+		swap(&stacks->a_head, 'a');
+	else if (tmp->id == 2 && tmp->next->id == 1)
+	{
+		swap(&stacks->a_head, 'a');
+		reverse(&stacks->a_head, 'a');
+	}
+	else if (tmp->id == 2 && tmp->next->id == 0)
+		rotate(&stacks->a_head, 'a');
+	else if (tmp->id == 1 && tmp->next->id == 2)
+		reverse(&stacks->a_head, 'a');
+	else if (tmp->id == 0 && tmp->next->id == 2)
+	{
+		swap(&stacks->a_head, 'a');
+		rotate(&stacks->a_head, 'a');
+	}
+}
+
+void	sort_four_five(t_stacks *stacks)
+{
+	while (ft_lstsize_ps(stacks->a_head) > 3)
+	{
+		if (stacks->a_head->id == 0 || stacks->a_head->id == 1)
+            push(&stacks->a_head, &stacks->b_head, 'b');
+		else
+			rotate(&stacks->a_head, 'a');
+	}
+    reset_index(stacks->a_head);
+	pre_sort_id(stacks);
+	sort_three(stacks);
+    push(&stacks->b_head, &stacks->a_head, 'a');
+    if (ft_lstsize_ps(stacks->a_head) == 4)
+        return ; 
+    push(&stacks->b_head, &stacks->a_head, 'a');
+	if (stacks->a_head->id > stacks->a_head->next->id)
+		swap(&stacks->a_head, 'a');
 }
 
 int main(int ac, char **av)
 {
 	t_stacks	stacks;
 
-    if (ac < 2)
+    if (ac < 3)
         return (1);
     parse(&stacks, av);
+    if(stacks.len > 5)
+        sort(&stacks);
+    else if (stacks.len == 4 || stacks.len == 5)
+        sort_four_five(&stacks);
+    else if (stacks.len == 3)
+        sort_three(&stacks);
+    else if (stacks.a_head->data > stacks.a_head->next->data)
+        rotate(&stacks.a_head, 'a');
+
+
     print_stack(&stacks);
-    sort(&stacks);
 }

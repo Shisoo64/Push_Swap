@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/12 16:51:27 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:31:49 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,18 @@ void print_stack(t_stacks *stacks)
 		tmp = tmp->next;
     }
     ft_printf("\n******************************\n");
+}
+
+void	reset_index(t_node *head)
+{
+	t_node	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		tmp->id = 0;
+		tmp = tmp->next;
+	}
 }
 
 char	*strjoin_ps(char *s1, char *s2)

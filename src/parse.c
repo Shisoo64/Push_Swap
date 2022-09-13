@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rlaforge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/13 15:52:29 by rlaforge          #+#    #+#             */
+/*   Updated: 2022/09/13 15:52:31 by rlaforge         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void    pre_sort_id(t_stacks *stacks)
@@ -20,10 +32,34 @@ void    pre_sort_id(t_stacks *stacks)
     }
 }
 
+int check_digit(char *tab)
+{
+    int i;
+
+    i = -1;
+
+    if (tab[0] == '\0' || !tab)
+		return (1);
+	while (tab[++i])
+	{
+		if (tab[i] == ' ' && tab[i + 1] == ' ')
+			i++;
+		else if ((tab[i] == '-' || tab[i] == '+')
+			&& (tab[i + 1] < 48 || tab[i + 1] > 57))
+			return (1);
+		else if ((tab[i] < 48 || tab[i] > 57)
+			&& (tab[i] != '-' && tab[i] != '+') && tab[i] != ' ')
+			return (1);
+		else if ((tab[i] >= 48 && tab[i] <= 57)
+			&& (tab[i + 1] == '-' || tab[i + 1] == '+'))
+			return (1);
+	}
+    return (0);
+}
+
 int check_args(char **tab)
 {
     int i;
-    int j;
     int x;
 
     i = 0;
@@ -31,9 +67,7 @@ int check_args(char **tab)
     {
         if(ft_atol(tab[i]) < INT_MIN || ft_atol(tab[i]) > INT_MAX)
             return (1);
-        j = -1;
-        while (tab[i][++j])
-            if(!ft_isdigit(tab[i][j]))
+        if(check_digit(tab[i]))
                 return (1);
         x = i;
         while (tab[--x] && x > 0)
