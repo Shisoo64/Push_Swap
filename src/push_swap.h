@@ -32,7 +32,16 @@ typedef struct s_stacks
 	int		len;
 }				t_stacks;
 
+void	push(t_node **src, t_node **dst, char stack_id);
+void	rotate(t_node **head, char stack_id);
 long	ft_atol(const char *nptr);
-void print_stack(t_stacks *stacks);
+void	print_stack(t_stacks *stacks);
+void	parse(t_stacks *stacks, char **av);
+int		ft_lstsize_ps(t_node *lst);
+char	*strjoin_ps(char *s1, char *s2);
+void    create_list(t_stacks *stacks, char **tab);
+int 	check_args(char **tab);
+void    pre_sort_id(t_stacks *stacks);
+void	newnode(t_node **head, int data, int id);
 
 #endif
