@@ -119,7 +119,7 @@ void	sort_four_five(t_stacks *stacks)
 	pre_sort_id(stacks);
 	sort_three(stacks);
     push(&stacks->b_head, &stacks->a_head, 'a');
-    if (ft_lstsize_ps(stacks->a_head) == 4)
+    if (ft_lstsize_ps(stacks->a_head) == 5)
         return ; 
     push(&stacks->b_head, &stacks->a_head, 'a');
 	if (stacks->a_head->id > stacks->a_head->next->id)
@@ -133,11 +133,11 @@ int main(int ac, char **av)
     if (ac < 3)
         return (1);
     parse(&stacks, av);
-    if(stacks.len > 5)
+    if(ac > 6)
         sort(&stacks);
-    else if (stacks.len == 4 || stacks.len == 5)
+    else if (ac == 5 || ac == 6)
         sort_four_five(&stacks);
-    else if (stacks.len == 3)
+    else if (ac == 4)
         sort_three(&stacks);
     else if (stacks.a_head->data > stacks.a_head->next->data)
         rotate(&stacks.a_head, 'a');

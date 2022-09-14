@@ -45,12 +45,12 @@ int check_digit(char *tab)
 		if (tab[i] == ' ' && tab[i + 1] == ' ')
 			i++;
 		else if ((tab[i] == '-' || tab[i] == '+')
-			&& (tab[i + 1] < 48 || tab[i + 1] > 57))
+			&& !ft_isdigit(tab[i + 1]))
 			return (1);
-		else if ((tab[i] < 48 || tab[i] > 57)
+		else if (!ft_isdigit(tab[i])
 			&& (tab[i] != '-' && tab[i] != '+') && tab[i] != ' ')
 			return (1);
-		else if ((tab[i] >= 48 && tab[i] <= 57)
+		else if (ft_isdigit(tab[i])
 			&& (tab[i + 1] == '-' || tab[i + 1] == '+'))
 			return (1);
 	}
