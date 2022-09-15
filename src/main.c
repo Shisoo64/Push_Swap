@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/13 18:47:21 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:58:10 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	newnode(t_node **head, int data, int id)
 {
 	t_node	*node;
-    t_node	*tmp;
+	t_node	*tmp;
 
 	node = malloc(sizeof(t_node));
 	if (node)
 	{
 		node->data = data;
-        node->id = id;
+		node->id = id;
 		node->next = NULL;
 	}
 	if (!*head || !head)
@@ -35,52 +35,52 @@ void	newnode(t_node **head, int data, int id)
 	tmp->next = node;
 }
 
-int    get_bitnbr(int size)
+int	get_bitnbr(int size)
 {
-    int bitnbr;
-    int bit_pow;
+	int	bitnbr;
+	int	bit_pow;
 
-    bit_pow = 1;
-    bitnbr = 0;
-    while ((size / bit_pow) != 0)
-    {
-        bit_pow *= 2;
-        bitnbr++;
-    }
-    return (bitnbr);
+	bit_pow = 1;
+	bitnbr = 0;
+	while ((size / bit_pow) != 0)
+	{
+		bit_pow *= 2;
+		bitnbr++;
+	}
+	return (bitnbr);
 }
 
-void    sort(t_stacks *stacks)
+void	sort(t_stacks *stacks)
 {
 	t_node	*tmpa;
 	t_node	*tmpb;
-    int x;
-    int i;
-    int bitnbr;
+    int		x;
+    int		i;
+    int		bitnbr;
 
-    bitnbr = get_bitnbr(stacks->len);
-    x = -1;
-    while (++x < bitnbr)
-    {
-        i = -1;
-        tmpa = stacks->a_head;
-        while (++i < stacks->len)
-        {
-            if (!tmpa)
-                break;
-            if ((tmpa->id >> x) & 1)
-                rotate(&stacks->a_head, 'a');
-            else
-                push(&stacks->a_head, &stacks->b_head, 'b');
-            tmpa = stacks->a_head;
-        }
-        tmpb = stacks->b_head;
-        while (tmpb)
-        {
-            push(&stacks->b_head, &stacks->a_head, 'a');
-            tmpb = stacks->b_head;
-        }
-    }
+	bitnbr = get_bitnbr(stacks->len);
+	x = -1;
+	while (++x < bitnbr)
+	{
+		i = -1;
+		tmpa = stacks->a_head;
+		while (++i < stacks->len)
+		{
+			if (!tmpa)
+				break ;
+			if ((tmpa->id >> x) & 1)
+				rotate(&stacks->a_head, 'a');
+			else
+				push(&stacks->a_head, &stacks->b_head, 'b');
+			tmpa = stacks->a_head;
+		}
+		tmpb = stacks->b_head;
+		while (tmpb)
+		{
+			push(&stacks->b_head, &stacks->a_head, 'a');
+			tmpb = stacks->b_head;
+		}
+	}
 }
 
 void	sort_three(t_stacks *stacks)
@@ -111,37 +111,37 @@ void	sort_four_five(t_stacks *stacks)
 	while (ft_lstsize_ps(stacks->a_head) > 3)
 	{
 		if (stacks->a_head->id == 0 || stacks->a_head->id == 1)
-            push(&stacks->a_head, &stacks->b_head, 'b');
+			push(&stacks->a_head, &stacks->b_head, 'b');
 		else
 			rotate(&stacks->a_head, 'a');
 	}
-    reset_index(stacks->a_head);
+	reset_index (stacks->a_head);
 	pre_sort_id(stacks);
 	sort_three(stacks);
-    push(&stacks->b_head, &stacks->a_head, 'a');
-    if (ft_lstsize_ps(stacks->a_head) == 5)
-        return ; 
-    push(&stacks->b_head, &stacks->a_head, 'a');
+	push (&stacks->b_head, &stacks->a_head, 'a');
+	if (ft_lstsize_ps(stacks->a_head) == 5)
+		return ;
+	push (&stacks->b_head, &stacks->a_head, 'a');
 	if (stacks->a_head->id > stacks->a_head->next->id)
 		swap(&stacks->a_head, 'a');
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_stacks	stacks;
 
-    if (ac < 3)
-        return (1);
-    parse(&stacks, av);
-    if(ac > 6)
-        sort(&stacks);
-    else if (ac == 5 || ac == 6)
-        sort_four_five(&stacks);
-    else if (ac == 4)
-        sort_three(&stacks);
-    else if (stacks.a_head->data > stacks.a_head->next->data)
-        rotate(&stacks.a_head, 'a');
+	if (ac < 3)
+		return (1);
+	parse(&stacks, av);
+	if (ac > 6)
+		sort(&stacks);
+	else if (ac == 5 || ac == 6)
+		sort_four_five(&stacks);
+	else if (ac == 4)
+		sort_three(&stacks);
+	else if (stacks.a_head->data > stacks.a_head->next->data)
+		rotate(&stacks.a_head, 'a');
 
 
-    print_stack(&stacks);
+	print_stack(&stacks);
 }

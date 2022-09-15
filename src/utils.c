@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/13 18:31:49 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/15 16:48:55 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 long	ft_atol(const char *nptr)
 {
 	long	nbr;
-	int	neg;
-	int	i;
+	int		neg;
+	int		i;
 
 	i = 0;
 	neg = 1;
@@ -35,26 +35,26 @@ long	ft_atol(const char *nptr)
 	return (nbr * neg);
 }
 
-void print_stack(t_stacks *stacks)
+void	print_stack(t_stacks *stacks)
 {
-    t_node	*tmp;
+	t_node	*tmp;
 
-    tmp = stacks->a_head;
-    ft_printf("*** Printing the stacks ******\n");
-    ft_printf("*** A : * ");
+	tmp = stacks->a_head;
+	ft_printf("*** Printing the stacks ******\n");
+	ft_printf("*** A : * ");
 	while (tmp)
-    {
-        ft_printf("%d * ", tmp->data);
+	{
+		ft_printf("%d * ", tmp->data);
 		tmp = tmp->next;
-    }
-    tmp = stacks->b_head;
-    ft_printf("\n*** B : * ");
+	}
+	tmp = stacks->b_head;
+	ft_printf("\n*** B : * ");
 	while (tmp)
-    {
-        ft_printf("%d * ", tmp->data);
+	{
+		ft_printf("%d * ", tmp->data);
 		tmp = tmp->next;
-    }
-    ft_printf("\n******************************\n");
+	}
+	ft_printf("\n******************************\n");
 }
 
 void	reset_index(t_node *head)

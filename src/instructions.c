@@ -14,13 +14,13 @@
 
 void	push(t_node **src, t_node **dst, char stack_id)
 {
-    t_node	*tmp;
+	t_node	*tmp;
 
-    ft_printf("p%c\n", stack_id);
-    tmp = (*src)->next;
+	ft_printf("p%c\n", stack_id);
+	tmp = (*src)->next;
 	(*src)->next = *dst;
 	*dst = *src;
-    *src = tmp;
+	*src = tmp;
 }
 
 void	swap(t_node **head, char stack_id)
@@ -29,7 +29,7 @@ void	swap(t_node **head, char stack_id)
 
 	if (ft_lstsize_ps(*head) < 2)
 		return ;
-    ft_printf("s%c\n", stack_id);
+	ft_printf("s%c\n", stack_id);
 	tmp = *head;
 	*head = (*head)->next;
 	tmp->next = (*head)->next;
@@ -38,19 +38,19 @@ void	swap(t_node **head, char stack_id)
 
 void	rotate(t_node **head, char stack_id)
 {
-    t_node	*tail;
-    t_node	*tmp;
+	t_node	*tail;
+	t_node	*tmp;
 
 	if (!*head || !(*head)->next)
 		return ;
-    ft_printf("r%c\n", stack_id);
-    tail = *head;
-    tmp = *head;
-    *head = (*head)->next;
-    while (tail->next)
+	ft_printf("r%c\n", stack_id);
+	tail = *head;
+	tmp = *head;
+	*head = (*head)->next;
+	while (tail->next)
 		tail = tail->next;
-    tmp->next = NULL;
-    tail->next = tmp;
+	tmp->next = NULL;
+	tail->next = tmp;
 }
 
 void	reverse(t_node **head, char stack_id)
@@ -60,7 +60,7 @@ void	reverse(t_node **head, char stack_id)
 
 	if (ft_lstsize_ps(*head) < 2)
 		return ;
-    ft_printf("rr%c\n", stack_id);
+	ft_printf("rr%c\n", stack_id);
 	tmp = *head;
 	tmp2 = *head;
 	while (tmp->next)
