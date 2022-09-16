@@ -32,24 +32,23 @@ void	pre_sort_id(t_stacks *stacks)
 	}
 }
 
-int	check_digit(char *tab)
+int	check_digit(char *str)
 {
 	int	i;
 
 	i = -1;
-
-	if (tab[0] == '\0' || !tab)
+	if (str[0] == '\0' || !str[0] || !str)
 		return (1);
-	while (tab[++i])
+	while (str[++i])
 	{
-		if (tab[i] == ' ' && tab[i + 1] == ' ')
+		if (str[i] == ' ' && str[i + 1] == ' ')
 			i++;
-		else if ((tab[i] == '-' || tab[i] == '+') && !ft_isdigit(tab[i + 1]))
+		else if ((str[i] == '-' || str[i] == '+') && !ft_isdigit(str[i + 1]))
 			return (1);
-		else if (!ft_isdigit(tab[i]) && (tab[i] != '-' && tab[i] != '+') \
-				&& tab[i] != ' ')
+		else if (!ft_isdigit(str[i]) && (str[i] != '-' && str[i] != '+') \
+				&& str[i] != ' ')
 			return (1);
-		else if (ft_isdigit(tab[i]) && (tab[i + 1] == '-' || tab[i + 1] == '+'))
+		else if (ft_isdigit(str[i]) && (str[i + 1] == '-' || str[i + 1] == '+'))
 			return (1);
 	}
 	return (0);
@@ -60,7 +59,9 @@ int	check_args(char **tab)
 	int	i;
 	int	x;
 
-	i = 0;
+	i = -1;
+	if (!tab[0])
+		return (1);
 	while (tab[++i])
 	{
 		if (ft_atol(tab[i]) < INT_MIN || ft_atol(tab[i]) > INT_MAX)
@@ -68,7 +69,7 @@ int	check_args(char **tab)
 		if (check_digit(tab[i]))
 			return (1);
 		x = i;
-		while (tab[--x] && x > 0)
+		while (tab[--x] && x >= 0)
 			if (ft_atoi(tab[x]) == ft_atoi(tab[i]))
 				return (1);
 	}

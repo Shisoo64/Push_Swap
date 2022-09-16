@@ -1,4 +1,5 @@
 SRCS =	src/main.c \
+	src/sort.c \
 	src/parse.c \
 	src/instructions.c \
 	src/utils.c

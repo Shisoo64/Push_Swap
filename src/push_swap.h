@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/13 18:34:11 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:38:15 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,10 @@ int		check_args(char **tab);
 void	pre_sort_id(t_stacks *stacks);
 void	newnode(t_node **head, int data, int id);
 void	reset_index(t_node *head);
+int		get_bitnbr(int size);
+void	sort(t_stacks *stacks);
+void	sort_ext(t_stacks *stacks);
+void	sort_three(t_stacks *stacks);
+void	sort_four_five(t_stacks *stacks);
 
 #endif
