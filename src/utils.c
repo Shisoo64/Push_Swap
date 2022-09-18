@@ -74,6 +74,12 @@ char	*strjoin_ps(char *s1, char *s2)
 	char	*tab;
 	int		longueur;
 
+	if (!s2[0])
+	{
+		write(2, "Error\n", 6);
+		free(s1);
+		exit(0);
+	}
 	longueur = ft_strlen(s1) + ft_strlen(s2) + 2;
 	tab = malloc(sizeof(char) * longueur);
 	if (!tab)
@@ -91,10 +97,29 @@ int	ft_lstsize_ps(t_node *lst)
 	int	i;
 
 	i = 0;
-	while (lst != NULL)
+	while (lst)
 	{
 		i++;
 		lst = lst->next;
 	}
 	return (i);
+}
+
+void	freestacks(t_stacks *stacks)
+{
+	t_node *tmp;
+
+	while (stacks->a_head)
+	{
+		tmp = stacks->a_head;
+		stacks->a_head = stacks->a_head->next;
+		free(tmp);
+	}
+	while (stacks->b_head)
+	{
+		tmp = stacks->b_head;
+		stacks->b_head = stacks->b_head->next;
+		free(tmp);
+	}
+	exit(0);
 }

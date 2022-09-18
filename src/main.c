@@ -57,6 +57,8 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (1);
 	parse(&stacks, av);
+	if (!stacks.a_head->next)
+		freestacks(&stacks);
 	if (stacks.len > 5)
 		sort(&stacks);
 	else if (stacks.len == 5 || stacks.len == 4)
@@ -65,4 +67,5 @@ int	main(int ac, char **av)
 		sort_three(&stacks);
 	else if (stacks.a_head->data > stacks.a_head->next->data)
 		rotate(&stacks.a_head, 'a');
+	freestacks(&stacks);
 }

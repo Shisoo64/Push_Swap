@@ -76,6 +76,16 @@ int	check_args(char **tab)
 	return (0);
 }
 
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+}
+
 void	create_list(t_stacks *stacks, char **tab)
 {
 	int	i;
@@ -84,6 +94,7 @@ void	create_list(t_stacks *stacks, char **tab)
 	stacks->b_head = NULL;
 	while (tab[++i])
 		newnode(&stacks->a_head, ft_atoi(tab[i]), 0);
+	free_tab(tab);
 	pre_sort_id(stacks);
 }
 
@@ -102,6 +113,7 @@ void	parse(t_stacks *stacks, char **av)
 	if (check_args(tab))
 	{
 		write(2, "Error\n", 6);
+		free_tab(tab);
 		exit(0);
 	}
 	create_list(stacks, tab);
