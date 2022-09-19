@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:20:10 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/16 15:38:15 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:22:19 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	sort(t_stacks *stacks);
 void	sort_ext(t_stacks *stacks);
 void	sort_three(t_stacks *stacks);
 void	sort_four_five(t_stacks *stacks);
+void	free_tab(char **tab);
 void	freestacks(t_stacks *stacks);
 
 #endif

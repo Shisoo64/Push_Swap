@@ -76,16 +76,6 @@ int	check_args(char **tab)
 	return (0);
 }
 
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = -1;
-	while (tab[++i])
-		free(tab[i]);
-	free(tab);
-}
-
 void	create_list(t_stacks *stacks, char **tab)
 {
 	int	i;

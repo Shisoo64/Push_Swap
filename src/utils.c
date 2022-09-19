@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/09/16 16:25:52 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:27:02 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ long	ft_atol(const char *nptr)
 	return (nbr * neg);
 }
 
+/*
 void	print_stack(t_stacks *stacks)
 {
 	t_node	*tmp;
@@ -56,6 +57,7 @@ void	print_stack(t_stacks *stacks)
 	}
 	ft_printf("\n******************************\n");
 }
+*/
 
 void	reset_index(t_node *head)
 {
@@ -107,7 +109,7 @@ int	ft_lstsize_ps(t_node *lst)
 
 void	freestacks(t_stacks *stacks)
 {
-	t_node *tmp;
+	t_node	*tmp;
 
 	while (stacks->a_head)
 	{
