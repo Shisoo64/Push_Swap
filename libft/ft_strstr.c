@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 15:55:21 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/04/18 15:55:27 by rlaforge         ###   ########.fr       */
+/*   Created: 2022/01/19 22:10:28 by rlaforge          #+#    #+#             */
+/*   Updated: 2022/01/26 16:03:17 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
-
-int	ft_lstsize(t_list *lst)
+char	*ft_strstr(char *str, char *to_find)
 {
-	int	i;
+	int	ctr[2];
 
-	i = 0;
-	while (lst != NULL)
-	{	
-		i++;
-		lst = lst->next;
+	if (*to_find == '\0')
+		return (str);
+	ctr[0] = 0;
+	while (str[ctr[0]])
+	{
+		if (str[ctr[0]] == to_find[0])
+		{
+			ctr[1] = 0;
+			while (str[ctr[1]] && str[ctr[0] + ctr[1]] == to_find[ctr[1]])
+			{
+				if (to_find[ctr[1]++] == '\0')
+					return (str + ctr[0]);
+			}
+		}
+		ctr[0]++;
 	}
-	return (i);
+	return (0);
 }

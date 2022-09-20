@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlaforge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 15:55:21 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/04/18 15:55:27 by rlaforge         ###   ########.fr       */
+/*   Created: 2022/01/19 21:13:22 by rlaforge          #+#    #+#             */
+/*   Updated: 2022/01/27 15:03:21 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
-
-int	ft_lstsize(t_list *lst)
+char	*ft_strncat(char *dest, char *src, unsigned int nb)
 {
-	int	i;
+	unsigned int	i;
+	unsigned int	n;
 
 	i = 0;
-	while (lst != NULL)
-	{	
+	n = 0;
+	while (dest[i])
 		i++;
-		lst = lst->next;
-	}
-	return (i);
+	while (src[n] && n < nb)
+		dest[n + i] = src[n++];
+	dest[n + i] = '\0';
+	return (dest);
 }
