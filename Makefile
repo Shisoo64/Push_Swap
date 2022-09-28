@@ -22,16 +22,23 @@ all : $(NAME)
 $(LIBFT) :
 	make -C libft/
 
-$(NAME) : $(OBJS) $(LIBFT)
+$(NAME) : echo $(OBJS) $(LIBFT)
 	$(CC) $(OBJS) $(CFLAGS) -Llibft -lft  -o $(NAME)
+	@echo "\033[1;32m📦 Program compiled!\033[0m"
+
+echo :
+	@echo "\e[1;5m🗜️  Program compiling...\033[0m"
 
 clean :
 	rm -f $(OBJS)
 	make -C libft/ fclean
+	@echo "\033[34m🧹 Program cleaned!\033[0m"
 
 fclean : clean
 	rm -rf $(NAME)
+	@echo "\033[34mAnd executable too!\033[0m"
 
 re : fclean all
 
 .PHONY : all re clean fclean
+.SILENT :
