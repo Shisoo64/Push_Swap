@@ -13,8 +13,6 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <limits.h>
 # include "../libft/libft.h"
 
@@ -37,7 +35,6 @@ void	swap(t_node **head, char stack_id);
 void	reverse(t_node **head, char stack_id);
 void	rotate(t_node **head, char stack_id);
 long	ft_atol(const char *nptr);
-void	print_stack(t_stacks *stacks);
 void	parse(t_stacks *stacks, char **av);
 int		ft_lstsize_ps(t_node *lst);
 char	*strjoin_ps(char *s1, char *s2);

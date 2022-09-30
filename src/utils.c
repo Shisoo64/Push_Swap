@@ -35,30 +35,6 @@ long	ft_atol(const char *nptr)
 	return (nbr * neg);
 }
 
-/*
-void	print_stack(t_stacks *stacks)
-{
-	t_node	*tmp;
-
-	tmp = stacks->a_head;
-	ft_printf("*** Printing the stacks ******\n");
-	ft_printf("*** A : * ");
-	while (tmp)
-	{
-		ft_printf("%d * ", tmp->data);
-		tmp = tmp->next;
-	}
-	tmp = stacks->b_head;
-	ft_printf("\n*** B : * ");
-	while (tmp)
-	{
-		ft_printf("%d * ", tmp->data);
-		tmp = tmp->next;
-	}
-	ft_printf("\n******************************\n");
-}
-*/
-
 void	reset_index(t_node *head)
 {
 	t_node	*tmp;
