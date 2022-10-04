@@ -6,7 +6,7 @@
 /*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/10/04 16:10:55 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:19:56 by rlaforge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,19 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-int	sorted(int ac, char **av)
-{
-	int	i;
 
-	i = -1;
-	while (++i != ac - 1)
-		if (ft_atol(av[i]) > ft_atol(av[i + 1]))
+
+int	sorted(t_node *head)
+{
+	t_node	*tmp;
+
+	tmp = head;
+	while (tmp->next)
+	{
+		if (tmp->id >= tmp->next->id)
 			return (0);
+		tmp = tmp->next;
+	}
 	return (1);
 }
 
@@ -77,10 +82,8 @@ int	main(int ac, char **av)
 
 	if (ac < 2)
 		return (1);
-	if (sorted(ac, av))
-		return (0);
 	parse(&stacks, av);
-	if (!stacks.a_head->next)
+	if (!stacks.a_head->next || sorted(stacks.a_head))
 		freestacks(&stacks);
 	if (stacks.len > 5)
 		sort(&stacks);

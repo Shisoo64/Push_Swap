@@ -69,7 +69,7 @@ int	check_args(char **tab)
 		if (check_digit(tab[i]))
 			return (1);
 		x = i;
-		while (tab[--x] && x >= 0)
+		while (--x >= 0)
 			if (ft_atoi(tab[x]) == ft_atoi(tab[i]))
 				return (1);
 	}
@@ -81,6 +81,7 @@ void	create_list(t_stacks *stacks, char **tab)
 	int	i;
 
 	i = -1;
+	stacks->a_head = NULL;
 	stacks->b_head = NULL;
 	while (tab[++i])
 		newnode(&stacks->a_head, ft_atoi(tab[i]), 0);
