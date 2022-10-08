@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlaforge <rlaforge@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:39:33 by rlaforge          #+#    #+#             */
-/*   Updated: 2022/10/04 16:19:56 by rlaforge         ###   ########.fr       */
+/*   Updated: 2022/10/08 13:58:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	free_tab(char **tab)
 		free(tab[i]);
 	free(tab);
 }
-
-
 
 int	sorted(t_node *head)
 {
